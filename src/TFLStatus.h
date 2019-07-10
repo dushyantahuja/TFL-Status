@@ -8,15 +8,16 @@
 #define TFLStatus_h
 
 #include "Arduino.h"
+#include <ESP8266WiFi.h>
 
 class TFLStatus
 {
   public:
-    TFLStatus(String Line, String Key, String ID); // For Tube Status
+    TFLStatus(String Line, String ID, String Key); // For Tube Status
     void updateStatus();
-    char* getLineStatus();
+    const char* getLineStatus();
     int getLineSeverity();
-    char* getLineReason();
+    const char* getLineReason();
   private:
     String _Key;
     String _Line;

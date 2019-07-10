@@ -1,22 +1,24 @@
 #include "Arduino.h"
-#include "TFLStatus.h"
+#include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 #include "ArduinoJson.h"
+#include "TFLStatus.h"
 
 const char fingerprint[] PROGMEM = "78 87 74 76 99 e2 f8 1b e0 9d c7 07 12 bd 46 1c aa 37 ad 69"; //TFL fingerprint
 const size_t capacity = 6*JSON_ARRAY_SIZE(0) + 4*JSON_ARRAY_SIZE(1) + JSON_ARRAY_SIZE(2) + JSON_OBJECT_SIZE(1) + JSON_OBJECT_SIZE(3) + 2*JSON_OBJECT_SIZE(4) + 2*JSON_OBJECT_SIZE(7) + 2*JSON_OBJECT_SIZE(9) + JSON_OBJECT_SIZE(11) + 2450;
 DynamicJsonDocument doc(capacity);
+String line;
 const char *host = "api.tfl.gov.uk";
 const int httpsPort = 443;  //HTTPS= 443 and HTTP = 80
+WiFiClientSecure httpsClient;
 
-TFLStatus::TFLStatus(String Line, String Key, String ID){
+TFLStatus::TFLStatus(String Line, String ID, String Key){
   _Key = Key;
   _Line = Line;
-  _Id = Id;
+  _ID = ID;
 }
 
 void TFLStatus::updateStatus(){
-  WifiFiClientSecure httpsClient;
   httpsClient.setFingerprint(fingerprint);
   httpsClient.setTimeout(15000); // 15 Seconds
   delay(1000);
@@ -28,12 +30,6 @@ void TFLStatus::updateStatus(){
       //Serial.print(".");
       r++;
   }
-  /*if(r==30) {
-    Serial.println("Connection failed");
-  }
-  else {
-    Serial.println("Connected to web");
-  }*/
 
   String Link;
 
@@ -71,12 +67,12 @@ void TFLStatus::updateStatus(){
   _LineReason = doc[0]["lineStatuses"][0]["reason"];
 }
 
-char* getLineStatus(){
-  return _LineStatus
+const char* TFLStatus::getLineStatus(){
+  return _LineStatus;
 }
-int getLineSeverity(){
-  return _LineSeverity
+int TFLStatus::getLineSeverity(){
+  return _LineSeverity;
 }
-char* getLineReason(){
-  return _LineReason
+const char* TFLStatus::getLineReason(){
+  return _LineReason;
 }
