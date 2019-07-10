@@ -1,0 +1,26 @@
+{
+  "name": "TFLStatus",
+  "keywords": "TFL,Tube",
+  "description": "Library to get tube status from the TFL API",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/dushyantahuja/TFL-Status.git"
+  },
+  "authors":
+  [
+    {
+      "name": "Dushyant Ahuja",
+      "maintainer": true
+    }
+  ],
+  "dependencies":
+  {
+    "name": "OneWire",
+    "authors": "Paul Stoffregen",
+    "frameworks": "arduino"
+  },
+  "version": "1.0.0",
+  "frameworks": "arduino",
+  "platforms": "espressif8266"
+}
