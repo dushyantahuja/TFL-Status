@@ -78,6 +78,6 @@ const char* TFLStatus::getLineReason(){
   return _LineReason;
 }
 
-String getLineReason(){
-  return _Reason;
+String getResponse(){
+  return _Response;
 }
