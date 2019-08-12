@@ -61,6 +61,7 @@ void TFLStatus::updateStatus(){
     line = httpsClient.readString();
     //Serial.println(line); //Print response
   }
+  _Response = line;
   deserializeJson(doc, line);
   _LineStatus = doc[0]["lineStatuses"][0]["statusSeverityDescription"];
   _LineSeverity = doc[0]["lineStatuses"][0]["statusSeverity"];
@@ -75,4 +76,8 @@ int TFLStatus::getLineSeverity(){
 }
 const char* TFLStatus::getLineReason(){
   return _LineReason;
+}
+
+String getLineReason(){
+  return _Reason;
 }
