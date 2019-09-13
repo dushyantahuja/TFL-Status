@@ -18,6 +18,7 @@ class TFLStatus
     const char* getLineStatus();
     int getLineSeverity();
     const char* getLineReason();
+    String getResponse();
   private:
     String _Key;
     String _Line;
@@ -25,6 +26,7 @@ class TFLStatus
     const char* _LineStatus;
     int _LineSeverity;
     const char* _LineReason;
+    String _Response;
 };
 
 #endif

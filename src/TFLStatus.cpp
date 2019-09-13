@@ -4,7 +4,8 @@
 #include "ArduinoJson.h"
 #include "TFLStatus.h"
 
-const char fingerprint[] PROGMEM = "78 87 74 76 99 e2 f8 1b e0 9d c7 07 12 bd 46 1c aa 37 ad 69"; //TFL fingerprint
+const char fingerprint[] PROGMEM = "5B 2C 4C 7E AF 1A FE 11 8C E6 02 62 9B F0 EA A6 00 C1 A2 19"; //TFL fingerprint
+
 const size_t capacity = 6*JSON_ARRAY_SIZE(0) + 4*JSON_ARRAY_SIZE(1) + JSON_ARRAY_SIZE(2) + JSON_OBJECT_SIZE(1) + JSON_OBJECT_SIZE(3) + 2*JSON_OBJECT_SIZE(4) + 2*JSON_OBJECT_SIZE(7) + 2*JSON_OBJECT_SIZE(9) + JSON_OBJECT_SIZE(11) + 2450;
 DynamicJsonDocument doc(capacity);
 String line;
@@ -61,6 +62,7 @@ void TFLStatus::updateStatus(){
     line = httpsClient.readString();
     //Serial.println(line); //Print response
   }
+  _Response = line;
   deserializeJson(doc, line);
   _LineStatus = doc[0]["lineStatuses"][0]["statusSeverityDescription"];
   _LineSeverity = doc[0]["lineStatuses"][0]["statusSeverity"];
@@ -75,4 +77,8 @@ int TFLStatus::getLineSeverity(){
 }
 const char* TFLStatus::getLineReason(){
   return _LineReason;
+}
+
+String TFLStatus::getResponse(){
+  return _Response;
 }
